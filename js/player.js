@@ -6,7 +6,7 @@ class Player {
     this.width = 1
     this.height = 1
     this.geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    this.material = new THREE.MeshBasicMaterial( { color: 0x0B5394} );
+    this.material = new THREE.MeshPhongMaterial( { color: 0x0B5394} );
     this.cube = new THREE.Mesh( this.geometry, this.material );
     this.cube.x = x
     this.cube.y = y
@@ -17,8 +17,11 @@ class Player {
   updatePlayer(keyCode) {
     this.cube.rotation.x += 0.01;
 this.cube.rotation.y += 0.01;
-this.cube.position.y = player.cube.position.y - .01;
-
+if(player.cube.position.y < -3) {
+  this.cube.position.y = player.cube.position.y + .01;
+} else if(player.cube.position.y < 3) {
+  this.cube.position.y = player.cube.position.y - .01;
+}
 
     if (keyCode == '38') {
         // up arrow
@@ -42,14 +45,22 @@ this.cube.position.y = player.cube.position.y - .01;
        // space bar
        this.cube.position.y = this.cube.position.y + .4;
     }
+    else if (keyCode == '87') {
+       // w
+       camera.position.z = camera.position.z + .4;
+    }
+    else if (keyCode == '83') {
+       // s
+       camera.position.z = camera.position.z - .4;
+    }
 
   }
   collision(target) {
     // first, check to see if the left edge of either is farther to the right
     // than the right edge of the other
     //console.log('player x ' + Math.round(this.cube.position.x) + ' alien x ' + Math.round( target.cube.position.x + target.width));
-    console.log('player y ' + Math.round(this.cube.position.y) + ' alien y ' + Math.round(target.cube.position.y + target.height));
-    console.log('target height is ' + target.height);
+    //console.log('player y ' + Math.round(this.cube.position.y) + ' alien y ' + Math.round(target.cube.position.y + target.height));
+    //console.log('target height is ' + target.height);
     if(this.cube.position.x > target.cube.position.x + target.width || target.cube.position.x > this.cube.position.x + this.width) {
         return false
     }
@@ -61,7 +72,7 @@ this.cube.position.y = player.cube.position.y - .01;
    }
 
     // if the above aren't true, they're overlapping
-    console.log('return true');
+    //console.log('return true');
     return true
 
   }

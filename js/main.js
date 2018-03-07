@@ -12,10 +12,18 @@ var player = new Player(10, 10, 10);
 
 var alien = new Alien(500, 50, 50);
 
+var light = new Light(.5, 50);
+sphere = light.mesh
+var pointLight = light.theactuallight;
+pointLight.position.y = 2;
+
+
+
 // scene.add( player.createBox );
 scene.add( player.cube );
-
 scene.add( alien.cube );
+pointLight.add(sphere);
+scene.add(pointLight);
 
 camera.position.z = 5;
 
@@ -30,7 +38,6 @@ alien.updateAlien();
 if(player.collision(alien)) {
   var audio = new Audio('audio/explosion.wav');
   audio.play();
-  console.log('collision')
 }
 requestAnimationFrame( animate );
 
