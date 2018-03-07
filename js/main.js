@@ -28,7 +28,7 @@ var animate = function () {
 player.updatePlayer();
 alien.updateAlien();
 if(player.collision(alien)) {
-  var audio = new Audio('audio/explosion.wav');
+  var audio = new Audio('audio/pickup.wav');
   audio.play();
   console.log('collision')
 }
